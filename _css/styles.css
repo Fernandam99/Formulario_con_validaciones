@@ -1,0 +1,39 @@
+body {
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #2c50f3 0% #0a0369 100%);
+    min-height: 100vh;
+}
+
+/*estilo del div general*/
+.container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/*estio aplicado al progreso del formulario*/
+.progreso-formulario {
+    width: 100%;
+    height: 6px; /*con js se anima*/
+    background-color: #e1e5e9;
+    border-radius: 3px;
+    margin-bottom: 30px;
+    overflow: hidden;/*se usa para controlar el contenido, cuando este sobre pasa en contenedor, es decir no muestra ese exceso*/
+}
+
+.barra-progreso {
+    height: 100%;
+    background: linear-gradient(90deg, #2c50f3, #220b4b);
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 3px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+}
