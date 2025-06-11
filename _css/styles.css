@@ -37,3 +37,46 @@ body {
     margin-bottom: 25px;
     position: relative;
 }
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;/*el rem hace que el tamaño se proporcional*/
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all0.3s ease;/*se usa para crear una animacion susave*/
+}
+
+/*estados de validacion visual*/
+input.valido, select.valido, textarea.valido {
+    border-color: #28a745;
+    background-color: #f8fff9;
+}
+
+input.invalido, select.invalido, textarea.invalido {
+    border-color: #f72626;
+    background-color: #f8fff8;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #220b4b;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
