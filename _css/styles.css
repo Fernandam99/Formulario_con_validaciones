@@ -3,7 +3,8 @@ body {
     max-width: 700px;
     margin: 0 auto;
     padding: 20px;
-    background: linear-gradient(135deg, #2c50f3 0% #0a0369 100%);
+    background-color: #2cf33d; /* Fallback */
+    background: linear-gradient(135deg, #2c50f3 0%, #0a0369 100%) fixed;
     min-height: 100vh;
 }
 
@@ -74,9 +75,116 @@ input.invalido, select.invalido, textarea.invalido {
     background-color: #f8fff8;
 }
 
+/* los : en despues la clase hacen referencia a una seudoclase, que es un estado especial del elemento */
 input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: #220b4b;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
+/*mensaje de error*/
+.mensaje-error {
+    color: #f72626;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: none;
+    animation: slideDown 0.3s ease;
+}
+
+/*mensaje de exito*/
+.mensaje-exito {
+    color: #28a745;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: none;
+    animation: slideDown 0.3s ease; 
+}
+
+/*el slideDown es un diferent el cual determina la forma en la que se mostrara la animación */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*indicador de fortaleza de contraseña*/
+.password-strength {
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 5px;
+    transition: all 0.3s ease;
+}
+
+.strength-weak {
+    background-color: #f72626;
+    width: 25%;
+}
+
+.strength-medium {
+    background-color: #f3a623;
+    width: 50%;
+}
+
+.strength-strong {
+    background-color: #28a745;
+    width: 75%;
+}
+
+.strength-very-strong {
+    background-color: #1f8002;
+    width: 100%;
+}
+
+/* estilo botone */
+button {
+    background-color: #2c50f3;
+    color: white;
+    padding: 17px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    margin: 20px;
+    transition: all 0.3s ease;
+}
+
+button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.contenedor-caracteres {
+    font-size: 0.8rem;
+    color: #666;
+    text-align: right;
+    margin-top: 5px;
+}
+
+.resumen-datos {
+    background-attachment: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 30px;
+    display: none;
+    border-left: 4px solid #2c50f3;
+}
+
+.dato-resumen {
+    margin-bottom: 12px;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e1e5e9;
+}
