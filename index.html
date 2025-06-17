@@ -8,32 +8,48 @@
 </head>
 <body>
     <!--contenedor general de la página-->
-    <div class="container">
+    <main class="container">
         <h1>Formulario avanzado</h1>
 
         <!--barra de progreso-->
-        <div class="progreso-formulario">
-            <div class="barra-progreso" id="barra progreso"></div>
-        </div>
-        <p style="text-align: center; color: #666; margin-bottom: 30px;">
-            progreso: <span id="porcentajeProgreso">0%</span><!--etiqueta para colocar contenidos extras dentro de un parrafo-->
-        </p>
+        <header>
+            <div class="progreso-formulario">
+                <div class="barra-progreso" id="barraProgreso"></div>
+            </div>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                progreso: <span id="porcentajeProgreso">0%</span><!--etiqueta para colocar contenidos extras dentro de un parrafo-->
+            </p>
+        </header>
 
         <!--formulario-->
         <form id="formularioAvanzado" novalidate><!--el atributo no valide indica que se debe desactivar la validación desd el lado del cliente-->
-            <!--Nombr4e con validación en tiempo real-->
-            <div class="from-group">
-                <label for="nombreCompleto">Nombe completo *</label> <!--el * indica graficamente que es requerido-->
+            <!--Nombre con validación en tiempo real-->
+            <div class="form-group">
+                <label for="nombre">Nombre *</label> <!--el * indica graficamente que es requerido-->
                 <input 
                     type="text"
-                    id="nombreCompleto"
-                    name="nombreCompleto"
+                    id="nombre"
+                    name="nombre"
                     required
                     autofocus 
-                    placeholder="Minimo 2 nombres"
-                    pattern="[A-Za-zÁÉÍÓüáéíóúÑñÜü ]{3,40}"/> <!-- el autofocus es para que el cursor se encuentre en el campo de texto, la forma minlength o maxlength no es recomendable-->
+                    placeholder="Minimo 1 nombre"
+                    pattern="[A-Za-zÁÉÍÓüáéíóúÑñÜü ]{3,20}"/> <!-- el autofocus es para que el cursor se encuentre en el campo de texto, la forma minlength o maxlength no es recomendable-->
                 <div class="mensaje-error" id="errorNombre"></div>
                 <div class="mensaje-exito" id="exitoNombre"></div>
+            </div>
+            <!--Apelidos con validación en tiempo real-->
+            <div class="form-group">
+                <label for="apellidos">Apellidos *</label>
+                <input 
+                    type="text"
+                    id="apellidos"
+                    name="apellidos"
+                    required
+                    autofocus
+                    placeholder="Minimo 2 apellidos"
+                    pattern="[A-Za-zÁÉÍÓüáéíóúÑñÜü ]{3,40}"/>
+                <div class="mensaje-error" id="errorApellidos"></div>
+                <div class="mensaje-exito" id="exitoApellidos"></div>
             </div>
             <!--emil con validacion personalizada-->
             <div class="form-group">
@@ -48,6 +64,18 @@
                 <div class="mensaje-error" id="errorCorreo"></div>
                 <div class="mensaje-exito" id="exitoCorreo"></div>
             </div>
+            <!--confirmacion correo-->
+            <div class="form-group">
+                <label for="confirmarCorreo">Confirmación correo electrónico *</label>
+                <input 
+                    type="email"
+                    id="confirmarCorreo"
+                    name="confirmarCorreo"
+                    required 
+                    placeholder="Repite tu correo electrónico">
+                <div class="mensaje-error" id="errorConfirmarCorreo"></div>
+                <div class="mensaje-exito" id="exitoConfirmarCorreo"></div>
+            </div>
             <!--contraseña con idicador de fortaleza-->
             <div class="form-group">
                 <label for="password">Contraseña *</label>
@@ -56,9 +84,9 @@
                     id="password"
                     name="password"
                     required 
-                    placeholder="minimo 8 caracteres"
+                    placeholder="Minimo 8 caracteres"
                     minlength="8"><!--cambiar la validacion minlegth-->
-                <div class="password-strengthid" id="strengthBar"></div>
+                <div class="password-strength" id="strengthBar"></div>
                 <div class="mensaje-error" id="errorPassword"></div>
                 <div class="mensaje-exito" id="exitoPassword"></div>
             </div>
@@ -67,8 +95,8 @@
                 <label for="password">Confirmación contraseña *</label>
                 <input 
                     type="password"
-                    id="confirmarpassword"
-                    name="confirmarpassword"
+                    id="confirmarPassword"
+                    name="confirmarPassword"
                     required 
                     placeholder="Repite tu contraseña">
                 <div class="mensaje-error" id="errorConfirmar"></div>
@@ -100,15 +128,16 @@
             </div>
             <!--Comentarios-->
             <div class="form-group">
-                <label for="Comentarios">Comentarios *</label>
+                <label for="comentarios">Comentarios *</label>
                 <textarea
-                    id="Comentarios"
-                    name="Comentarios"
+                    id="comentarios"
+                    name="comentarios"
+                    required
                     rows="4"
                     maxlength="500"
                     placeholder="Cuentanos sobre ti (máximo 500 caracteres)"></textarea><!--rows define de cuanto de alto aparece la caja para comentarios-->
                 <div class="contenedor-caracteres">
-                    <span id="contenedor-Comentarios">0</span>/500 caracteres
+                    <span id="contadorComentarios">0</span>/500 caracteres
                 </div>
             </div>
             <!--terminos y condiciones-->
@@ -126,14 +155,20 @@
             <!--boton enviar-->
             <button
                 type="submit"
-                id="bynEnviar"
+                id="btnEnviar"
                 disabled>
             Enviar Formulario
             </button><!--se puso disabled para que no se pueda enviar el formulario si hay campos sin llenar-->
         </form>
+    
+        <!--Resumen de datos enviados-->
+        <section id="resumenDatos" class="resumen-datos" style="display: none;">
+            <h2>Resumen de datos enviados</h2>
+            <div id="contenidoResumen"></div>
+        </section>
 
 
-    </div><!--conteiner-->
+    </main><!--conteiner-->
 
 <!-- scripts -->
 <script>
@@ -154,15 +189,15 @@
     // 🎯 VALIDACIONES ESPECÍFICAS POR CAMPO
 
     // Validación del nombre
-    document.getElementById('nombreCompleto').addEventListener('input', function () {
+    document.getElementById('nombre').addEventListener('input', function () {
         const valor = this.value.trim();
         const nombres = valor.split(' ').filter((nombre) => nombre.length > 0);
 
         if (valor.length < 3) {
             mostrarError('errorNombre', 'El nombre debe tener al menos 3 caracteres');
             marcarCampo(this, false);
-        } else if (nombres.length < 2) {
-            mostrarError('errorNombre', 'Ingresa al menos 2 nombres');
+        } else if (nombres.length < 1) {
+            mostrarError('errorNombre', 'Ingresa al menos 1 nombre');
             marcarCampo(this, false);
         } else {
             mostrarExito('exitoNombre', '✓ Nombre válido');
@@ -170,17 +205,69 @@
         }
     });
 
+    // Validación de apellidos
+    document.getElementById('apellidos').addEventListener('input', function () {
+        const valor = this.value.trim();
+        const apellidos = valor.split(' ').filter((apellido) => apellido.length > 0);
+
+        if (valor.length < 3) {
+            mostrarError('errorApellidos', 'Los apellidos deben tener al menos 3 caracteres');
+            marcarCampo(this, false);
+        } else if (apellidos.length < 2) {
+            mostrarError('errorApellidos', 'Ingresa al menos 2 apellidos');
+            marcarCampo(this, false);
+        } else {
+            mostrarExito('exitoApellidos', '✓ Apellidos válidos');
+            marcarCampo(this, true);
+        }
+    });
+
     // Validación del email
     document.getElementById('correo').addEventListener('input', function () {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const esValido = emailRegex.test(this.value);
 
-        if (!emailRegex.test(this.value)) {
+        if (!esValido) {
             mostrarError('errorCorreo', 'Formato de email inválido');
             marcarCampo(this, false);
         } else {
             mostrarExito('exitoCorreo', '✓ Email válido');
             marcarCampo(this, true);
         }
+
+    // Revalidación de confirmación de email
+    const confirmarCorreo = document.getElementById('confirmarCorreo');
+        if (confirmarCorreo) {
+            confirmar.dispatchEvent(new Event('input'));
+        }  
+    
+    });
+
+    // Validación de confirmación de email
+    document.getElementById('confirmarCorreo').addEventListener('input', function () {
+        const emailOriginal = document.getElementById('correo').value;
+        const emailConfirmacion = this.value;
+
+            if (emailConfirmacion !== emailOriginal) {
+                mostrarError('errorConfirmarCorreo', 'Los correos no coinciden');
+                marcarCampo(this, false);
+            } else if (emailConfirmacion.length > 0) {
+                mostrarExito('exitoConfirmarCorreo', '✓ Correos coinciden');
+                marcarCampo(this, true);
+            } else {
+                // Campo vacío
+                ocultarMensaje('errorConfirmarCorreo');
+                ocultarMensaje('exitoConfirmarCorreo');
+                marcarCampo(this, false);
+    }
+});
+
+    // Prevenir el pegado en la confirmación del correo
+    document.getElementById('confirmarCorreo').addEventListener('paste', function (e) {
+        e.preventDefault();
+        mostrarError('errorConfirmarCorreo', 'No se permite pegar en este campo');
+        this.value = ''; // Limpiar el campo
+        marcarCampo(this, false);
     });
 
     // Validación de contraseña con indicador de fortaleza
@@ -365,9 +452,16 @@
         for (let [campo, valor] of datosFormulario.entries()) {
             if (valor && valor.trim() !== '') {
                 const nombreCampo = obtenerNombreCampo(campo);
+                
+                let valorMostrado = valor;
+
+                // Ocultar campos de contraseña
+                if (campo === 'password' || campo === 'confirmarPassword') {
+                    valorMostrado = '********'; //Mostrara * en vez de la contraseña real
+                } 
                 resumenHTML += `
                     <div class="dato-resumen">
-                        <span class="etiqueta-resumen">${nombreCampo}:</span> ${valor}
+                        <span class="etiqueta-resumen">${nombreCampo}:</span> ${valorMostrado}
                     </div>
                 `;
             }
@@ -376,17 +470,25 @@
         document.getElementById('contenidoResumen').innerHTML = resumenHTML;
         document.getElementById('resumenDatos').style.display = 'block';
 
-        document.getElementById('resumenDatos').scrollIntoView({
-            behavior: 'smooth',
-        });
+        if ('scrollBehavior' in document.documentElement.style) {
+            document.getElementById('resumenDatos').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        } else {
+            document.getElementById('resumenDatos').scrollIntoView(true);
+        }
+
 
         console.log('📊 Formulario enviado con validación completa:', Object.fromEntries(datosFormulario));
     });
 
     function obtenerNombreCampo(campo) {
         const nombres = {
-            nombreCompleto: 'Nombre completo',
+            nombre: 'Nombre',
+            apellidos: 'Apellidos',
             correo: 'Correo electrónico',
+            confirmarCorreo: 'Confirmación de correo electrónico',
             password: 'Contraseña',
             confirmarPassword: 'Confirmación de contraseña',
             telefono: 'Teléfono',
